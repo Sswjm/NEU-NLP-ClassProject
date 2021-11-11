@@ -17,5 +17,3 @@ douLSTMLM.py: 根据LSTMLM.py修改实现的双层LSTM神经网络语言模型
 # 运行说明
 直接运行LSTMLM.py等代码文件即可
 
-# 课程地址
-[自然语言处理：深度学习方法](https://www.nlplab.com/courses/nlp2021/)
