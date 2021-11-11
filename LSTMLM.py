@@ -6,8 +6,8 @@ import torch.optim as optim
 import give_valid_test
 import _pickle as cpickle
 
-#device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+#device = torch.device("cpu")
 
 def make_batch(train_path, word2number_dict, batch_size, n_step):
     all_input_batch = []
@@ -68,8 +68,6 @@ class TextLSTM(nn.Module):
     def __init__(self):
         super(TextLSTM, self).__init__()
         self.C = nn.Embedding(n_class, embedding_dim=emb_size)
-
-        #self.LSTM = nn.LSTM(input_size=emb_size, hidden_size=n_hidden)
         
         self.w_ii = nn.Linear(emb_size, n_hidden, bias=False)
         self.b_ii = nn.Parameter(torch.ones([n_hidden]))
@@ -105,9 +103,6 @@ class TextLSTM(nn.Module):
     def forward(self, hidden, X):
         X = self.C(X)
 
-        # hidden_state = torch.zeros(1, len(X), n_hidden)  # [num_layers(=1) * num_directions(=1), batch_size, n_hidden]
-        # cell_state = torch.zeros(1, len(X), n_hidden)     # [num_layers(=1) * num_directions(=1), batch_size, n_hidden]
-
         X = X.transpose(0, 1) # X : [n_step, batch_size, embeding size]
 
         h_t_1 = hidden
@@ -126,14 +121,6 @@ class TextLSTM(nn.Module):
         model = self.W(h_t) + self.b
 
         return model
-        # outputs, (_, _) = self.LSTM(X, (hidden_state, cell_state))
-
-        #outputs, (_, _) = self.LSTM(X)
-        # outputs : [n_step, batch_size, num_directions(=1) * n_hidden]
-        # hidden : [num_layers(=1) * num_directions(=1), batch_size, n_hidden]
-        #outputs = outputs[-1] # [batch_size, num_directions(=1) * n_hidden]
-        #model = self.W(outputs) + self.b # model : [batch_size, n_class]
-        #return model
 
 def train_LSTMlm():
     model = TextLSTM()
