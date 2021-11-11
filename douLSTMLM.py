@@ -69,7 +69,7 @@ class TextLSTM(nn.Module):
         super(TextLSTM, self).__init__()
         self.C = nn.Embedding(n_class, embedding_dim=emb_size)
 
-        #self.LSTM = nn.LSTM(input_size=emb_size, hidden_size=n_hidden)
+        #self.LSTM = nn.LSTM(input_size=emb_size, hidden_size=n_hidden, num_layers=2)
         #layer 1
         self.w_ii = nn.Linear(emb_size, n_hidden, bias=False)
         self.b_ii = nn.Parameter(torch.ones([n_hidden]))
@@ -131,9 +131,6 @@ class TextLSTM(nn.Module):
     def forward(self, hidden, X):
         X = self.C(X)
 
-        # hidden_state = torch.zeros(1, len(X), n_hidden)  # [num_layers(=1) * num_directions(=1), batch_size, n_hidden]
-        # cell_state = torch.zeros(1, len(X), n_hidden)     # [num_layers(=1) * num_directions(=1), batch_size, n_hidden]
-
         X = X.transpose(0, 1) # X : [n_step, batch_size, embeding size]
 
 
@@ -154,7 +151,8 @@ class TextLSTM(nn.Module):
 
             c_t_1 = c_t
             h_t_1 = h_t
-
+        #end for
+        
         outputs = torch.tensor(outputs).to(device)
 
         # layer2
@@ -172,7 +170,8 @@ class TextLSTM(nn.Module):
             c_t_1 = c_t
             h_t_1 = h_t
 
-
+        #end for
+        
         #outputs 
         model = self.W(h_t) + self.b
 
