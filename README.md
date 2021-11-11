@@ -14,5 +14,8 @@ oriLSTMLM.py：使用官方提供的LSTM接口搭建的神经网络语言模型
 LSTMLM.py：修改后的仅使用nn.Linear和nn.Parameter搭建的LSTM神经网络语言模型
 
 douLSTMLM.py: 根据LSTMLM.py修改实现的双层LSTM神经网络语言模型
+# 运行说明
+直接运行LSTMLM.py等代码文件即可
+
 # 课程地址
 [自然语言处理：深度学习方法](https://www.nlplab.com/courses/nlp2021/)
