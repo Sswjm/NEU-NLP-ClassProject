@@ -120,6 +120,9 @@ class TextLSTM(nn.Module):
             c_t = f_t * c_t_1 + i_t * g_t
             h_t = o_t * self.tanh(c_t)
 
+            c_t_1 = c_t
+            h_t_1 = h_t
+
         model = self.W(h_t) + self.b
 
         return model
